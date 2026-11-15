@@ -1,0 +1,18 @@
+[
+    {
+        "id": "topic_swift_1",
+        "title": "{ let }",
+        "code": "let name = \"Tufan\"\nprint(name)"
+    },
+    {
+        "id": "topic_swift_2",
+        "title": "{ var }",
+        "code": "var score = 0\nscore += 10\nprint(score)"
+    },
+    {
+        "id": "topic_swift_3",
+        "title": "{ enum }",
+        "code":
+            "enum Direction {\n    case north\n    case south\n    case east\n    case west\n}\n\nlet direction: Direction = .north\nprint(direction)"
+    }
+]

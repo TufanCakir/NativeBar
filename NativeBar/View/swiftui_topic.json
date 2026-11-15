@@ -1,0 +1,32 @@
+[
+    {
+        "id": "topic_swiftui_1",
+        "title": "{ ZStack }",
+        "code":
+            "ZStack {\n    Rectangle()\n        .fill(.blue)\n\n    Text(\"Hallo SwiftUI\")\n        .foregroundStyle(.white)\n}"
+    },
+    {
+        "id": "topic_swiftui_2",
+        "title": "{ VStack }",
+        "code":
+            "VStack(spacing: 20) {\n    Text(\"Swift\")\n    Text(\"SwiftUI\")\n    Text(\"Xcode\")\n}"
+    },
+    {
+        "id": "topic_swiftui_3",
+        "title": "{ HStack }",
+        "code":
+            "HStack(spacing: 16) {\n    Image(systemName: \"house\")\n    Image(systemName: \"heart\")\n    Image(systemName: \"star\")\n}"
+    },
+    {
+        "id": "topic_swiftui_4",
+        "title": "{ Text }",
+        "code":
+            "Text(\"Hallo\")\n    .font(.title)\n    .foregroundStyle(.white)"
+    },
+    {
+        "id": "topic_swiftui_5",
+        "title": "{ Button }",
+        "code":
+            "Button(\"Tap\") {\n    print(\"Button gedrückt\")\n}\n.buttonStyle(.automatic)\n.background(.black)"
+    }
+]

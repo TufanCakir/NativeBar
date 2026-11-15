@@ -12,21 +12,43 @@ struct DocumentationView: View {
     @State private var selectedCategory: LearnCategory = .home
     @State private var copiedID: String?
 
+    private var documentations: [Documentation] {
+        guard let file = selectedCategory.documentationFile else {
+            return []
+        }
+
+        return loadLocalJSON(file)
+    }
+
+    private var documentationSwift: [Documentation] {
+        documentations.filter {
+            $0.id.hasPrefix("documentation_swift_")
+        }
+    }
+
+    private var documentationSwiftUI: [Documentation] {
+        documentations.filter {
+            $0.id.hasPrefix("documentation_swiftUI_")
+        }
+    }
+
     private var currentDocumentationText: String {
         let items: [Documentation]
 
         switch selectedCategory {
         case .home:
-            return "Welche Dokumentation willst du zuerst lernen?"
+            return "Was möchtest du heute lernen?"
+
         case .swift:
-            items = documentatinoSwift
+            items = documentationSwift
+
         case .swiftUI:
-            items = documentatinoSwiftUI
+            items = documentationSwiftUI
         }
 
         return
             items
-            .map { "\($0.text)\n\($0.description)" }
+            .map { "\($0.text)\n\($0.description.localized)" }
             .joined(separator: "\n\n")
     }
 
@@ -42,22 +64,18 @@ struct DocumentationView: View {
 
                 switch selectedCategory {
                 case .home:
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            Text("Was möchtest du heute lernen?")
-                        }
+                    VStack {
+                        Text("Was möchtest du heute lernen?")
                     }
-                    .foregroundStyle(.white)
-                    .padding(.top)
+                    .font(.system(size: 25))
 
                 case .swift:
-                    documentationList(items: documentatinoSwift)
+                    documentationList(items: documentationSwift)
 
                 case .swiftUI:
-                    documentationList(items: documentatinoSwiftUI)
+                    documentationList(items: documentationSwiftUI)
                 }
             }
-
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Schließen") {
@@ -75,12 +93,11 @@ struct DocumentationView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu("Kategorie") {
-                        Button("Swift") {
-                            selectedCategory = .swift
-                        }
-
-                        Button("SwiftUI") {
-                            selectedCategory = .swiftUI
+                        ForEach(LearnCategory.allCases.filter { $0 != .home }) {
+                            category in
+                            Button(category.title) {
+                                selectedCategory = category
+                            }
                         }
                     }
                 }
@@ -92,12 +109,13 @@ struct DocumentationView: View {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(items) { documentation in
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Label(
                                 documentation.text,
                                 systemImage: documentation.SFSymbol
                             )
+                            .foregroundStyle(documentation.color)
                             .font(.headline)
 
                             Spacer()
@@ -113,10 +131,9 @@ struct DocumentationView: View {
                             }
                         }
 
-                        Text(documentation.description)
+                        Text(documentation.description.localized)
                             .font(.subheadline)
                     }
-                    .foregroundStyle(documentation.color)
                     .padding()
                 }
             }
@@ -126,4 +143,5 @@ struct DocumentationView: View {
 
 #Preview {
     DocumentationView()
+        .preferredColorScheme(.dark)
 }

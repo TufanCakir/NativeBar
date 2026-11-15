@@ -10,10 +10,27 @@ import SwiftUI
 @main
 struct NativeBarApp: App {
 
-    @State private var searchText: String = ""
-
     @AppStorage("hasCompletedOnboarding")
     private var hasCompletedOnboarding = false
+
+    @AppStorage("appLanguage")
+    private var appLanguage: String = "system"
+
+    @AppStorage("appAppearance")
+    private var appAppearance: String = "system"
+
+    private var selectedLocale: Locale {
+        switch appLanguage {
+        case "de":
+            return Locale(identifier: "de")
+
+        case "en":
+            return Locale(identifier: "en")
+
+        default:
+            return .autoupdatingCurrent
+        }
+    }
 
     var body: some Scene {
         WindowGroup {

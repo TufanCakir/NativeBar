@@ -12,21 +12,42 @@ struct LearnView: View {
     @State private var selectedCategory: LearnCategory = .home
     @State private var copiedID: String?
 
+    private var topics: [Topic] {
+        guard let file = selectedCategory.topicFile else {
+            return []
+        }
+
+        return loadLocalJSON(file)
+    }
+    private var topicSwift: [Topic] {
+        topics.filter {
+            $0.id.hasPrefix("topic_swift_")
+        }
+    }
+
+    private var topicSwiftUI: [Topic] {
+        topics.filter {
+            $0.id.hasPrefix("topic_swiftui_")
+        }
+    }
+
     private var currentTopicText: String {
         let items: [Topic]
 
         switch selectedCategory {
         case .home:
-            return "Was möchtest du zuerst lernen?"
+            return "Was möchtest du heute lernen?"
+
         case .swift:
             items = topicSwift
+
         case .swiftUI:
             items = topicSwiftUI
         }
 
         return
             items
-            .map { "\($0.text)\n\($0.description)" }
+            .map { "\($0.title)\n\($0.code)" }
             .joined(separator: "\n\n")
     }
 
@@ -42,13 +63,10 @@ struct LearnView: View {
 
                 switch selectedCategory {
                 case .home:
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            Text("Was möchtest du heute lernen?")
-                        }
+                    VStack {
+                        Text("Was möchtest du heute lernen?")
                     }
-                    .foregroundStyle(.white)
-                    .padding(.top)
+                    .font(.system(size: 25))
 
                 case .swift:
                     topicList(items: topicSwift)
@@ -75,11 +93,11 @@ struct LearnView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu("Kategorie") {
-                        Button("Swift") {
-                            selectedCategory = .swift
-                        }
-                        Button("SwiftUI") {
-                            selectedCategory = .swiftUI
+                        ForEach(LearnCategory.allCases.filter { $0 != .home }) {
+                            category in
+                            Button(category.title) {
+                                selectedCategory = category
+                            }
                         }
                     }
                 }
@@ -91,18 +109,19 @@ struct LearnView: View {
         ScrollView {
             LazyVStack(spacing: 12) {
                 ForEach(items) { topic in
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Label(
-                                topic.text,
+                                topic.title,
                                 systemImage: topic.SFSymbol
                             )
+                            .foregroundStyle(topic.color)
                             .font(.headline)
 
                             Spacer()
 
                             Button {
-                                UIPasteboard.general.string = topic.text
+                                UIPasteboard.general.string = topic.title
                                 copiedID = topic.id
                             } label: {
                                 Image(
@@ -112,10 +131,9 @@ struct LearnView: View {
                             }
                         }
 
-                        Text(topic.description)
+                        Text(topic.code)
                             .font(.subheadline)
                     }
-                    .foregroundStyle(topic.color)
                     .padding()
                 }
             }
@@ -125,4 +143,5 @@ struct LearnView: View {
 
 #Preview {
     LearnView()
+        .preferredColorScheme(.dark)
 }

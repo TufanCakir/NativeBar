@@ -1,0 +1,32 @@
+[
+    {
+        "id": "documentation_swift_1",
+        "text": "{ let name = \"Swift\"}",
+        "description": {
+            "de":
+                "Mit let deklarierst du eine Konstante. Ihr Wert kann nach der Initialisierung nicht mehr neu zugewiesen werden. Verwende let, wenn sich ein Wert nicht ändern soll.",
+            "en":
+                "Use let to declare a constant. Its value cannot be reassigned after initialization. Use let when a value should not change."
+        }
+    },
+    {
+        "id": "documentation_swift_2",
+        "text": "{ var name = \"Swift\"}",
+        "description": {
+            "de":
+                "Mit var deklarierst du eine Variable. Ihr Wert kann nach der Initialisierung verändert werden. Verwende var, wenn sich ein Wert während der Programmausführung ändern soll.",
+            "en":
+                "Use var to declare a variable. Its value can be changed after initialization. Use var when a value needs to change during program execution."
+        }
+    },
+    {
+        "id": "documentation_swift_3",
+        "text": "{ if / else }",
+        "description": {
+            "de":
+                "Mit if kannst du in Swift überprüfen, ob eine Bedingung wahr (true) ist. Ist die Bedingung erfüllt, wird der zugehörige Code ausgeführt. Mit else kannst du festlegen, was passieren soll, wenn die Bedingung falsch (false) ist. Mit else if lassen sich zusätzliche Bedingungen überprüfen.",
+            "en":
+                "In Swift, if checks whether a condition is true. If the condition is met, the corresponding code is executed. You can use else to specify what happens when the condition is false. Additional conditions can be checked using else if."
+        }
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "id": "documentation_swiftUI_1",
+        "text": "{ ZStack }",
+        "description": {
+            "de":
+                "Ein ZStack ist ein Layout-Container in SwiftUI, der mehrere Views übereinander anordnet. Die zuerst angegebene View liegt im Hintergrund, nachfolgende Views werden darüber dargestellt. Ideal für Hintergründe, Overlays und überlagerte Elemente.",
+            "en":
+                "A ZStack is a SwiftUI layout container that arranges multiple views on top of each other. The first view appears in the background, while subsequent views are layered above it. Ideal for backgrounds, overlays, and overlapping elements."
+        }
+    },
+    {
+        "id": "documentation_swiftUI_2",
+        "text": "{ VStack }",
+        "description": {
+            "de":
+                "Ein VStack ist ein vertikaler Layout-Container in SwiftUI. Er ordnet seine untergeordneten Views von oben nach unten an. Mit spacing kannst du den Abstand zwischen den Elementen festlegen.",
+            "en":
+                "A VStack is a vertical layout container in SwiftUI. It arranges its child views from top to bottom. Use spacing to control the distance between elements."
+        }
+    },
+    {
+        "id": "documentation_swiftUI_3",
+        "text": "{ HStack }",
+        "description": {
+            "de":
+                "Ein HStack ist ein horizontaler Layout-Container in SwiftUI. Er ordnet seine untergeordneten Views nebeneinander an. Mit spacing kannst du den Abstand zwischen den Elementen festlegen.",
+            "en":
+                "An HStack is a horizontal layout container in SwiftUI. It arranges its child views side by side. Use spacing to control the distance between elements."
+        }
+    },
+    {
+        "id": "documentation_swiftUI_4",
+        "text": "{ Text }",
+        "description": {
+            "de":
+                "Text ist eine View in SwiftUI, mit der Texte auf der Benutzeroberfläche angezeigt werden. Mit verschiedenen Modifikatoren lassen sich unter anderem Schriftgröße, Schriftart, Farbe, Ausrichtung und Darstellung anpassen.",
+            "en":
+                "Text is a view in SwiftUI used to display text in the user interface. Various modifiers allow you to customize properties such as font size, font style, color, alignment, and appearance."
+        }
+    }
+]
