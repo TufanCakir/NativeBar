@@ -55,7 +55,7 @@ struct LearnView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [.black, .gray],
+                    colors: selectedCategory.backgroundColors,
                     startPoint: .trailing,
                     endPoint: .bottom
                 )
@@ -67,6 +67,11 @@ struct LearnView: View {
                         Text("Was möchtest du heute lernen?")
                     }
                     .font(.system(size: 20))
+                    .padding()
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
+                    }
 
                 case .swift:
                     topicList(items: topicSwift)
@@ -74,18 +79,25 @@ struct LearnView: View {
                 case .swiftUI:
                     topicList(items: topicSwiftUI)
                 }
-
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Schließen") {
                         selectedCategory = .home
                     }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
+                    }
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Kopieren") {
                         UIPasteboard.general.string = currentTopicText
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
                     }
                 }
 
@@ -100,9 +112,15 @@ struct LearnView: View {
                             }
                         }
                     }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
+                    }
                 }
             }
+
         }
+        .tint(selectedCategory.accentColor)
     }
 
     private func topicList(items: [Topic]) -> some View {
@@ -117,6 +135,14 @@ struct LearnView: View {
                             )
                             .foregroundStyle(topic.color)
                             .font(.headline)
+                            .padding()
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(
+                                        selectedCategory.accentColor,
+                                        lineWidth: 3
+                                    )
+                            }
 
                             Spacer()
 
@@ -130,12 +156,16 @@ struct LearnView: View {
                                 )
                             }
                         }
+                        .foregroundStyle(topic.color)
 
                         Text(topic.code)
-                            .font(.subheadline)
                     }
                     .padding()
-                    .background(.ultraThinMaterial)
+                    .background(.black)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(topic.color, lineWidth: 3)
+                    }
                 }
             }
         }

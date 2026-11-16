@@ -14,16 +14,18 @@ struct OnboardingView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [.black, .gray],
+                colors: [.black, .gray, .black],
                 startPoint: .trailing,
                 endPoint: .bottom
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 32) {
+            VStack(spacing: 12) {
                 Spacer()
 
                 headerView
+
+                Spacer()
 
                 featuresView
 
@@ -31,30 +33,35 @@ struct OnboardingView: View {
 
                 startButton
             }
-            .padding(24)
-            .frame(maxWidth: 520)
+            .padding()
         }
         .foregroundStyle(.white)
     }
 
     private var headerView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "curlybraces.square.fill")
-                .font(.system(size: 72))
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(.cyan, .white.opacity(0.15))
-                .accessibilityHidden(true)
 
-            VStack(spacing: 10) {
-                Text("Willkommen bei NativeBar")
-                    .font(.largeTitle.bold())
-                    .multilineTextAlignment(.center)
-            }
+        VStack {
+            Text("Willkommen bei NativeBar")
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .background(.black)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    LinearGradient(
+                        colors: [.black, .white, .black],
+                        startPoint: .trailing,
+                        endPoint: .leading
+                    ),
+                    lineWidth: 3
+                )
         }
     }
 
     private var featuresView: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(spacing: 12) {
             featureRow(
                 symbol: "book.closed.fill",
                 title: "Swift lernen",
@@ -64,7 +71,7 @@ struct OnboardingView: View {
             featureRow(
                 symbol: "doc.text.fill",
                 title: "Dokumentation",
-                description: "Lies Erklärungen zu Swift und SwiftUI."
+                description: "Lies Erklärungen."
             )
 
             featureRow(
@@ -73,15 +80,18 @@ struct OnboardingView: View {
                 description: "Finde Themen und Dokumentationen."
             )
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(.white.opacity(0.08))
-        }
+        .padding()
+        .background(.black)
         .overlay {
-            RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(.white.opacity(0.1))
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    LinearGradient(
+                        colors: [.black, .white, .black],
+                        startPoint: .trailing,
+                        endPoint: .leading
+                    ),
+                    lineWidth: 3
+                )
         }
     }
 
@@ -90,47 +100,38 @@ struct OnboardingView: View {
         title: String,
         description: String
     ) -> some View {
-        HStack(alignment: .center, spacing: 16) {
-            Image(systemName: symbol)
-                .font(.title2)
-                .foregroundStyle(.cyan)
-                .frame(width: 36)
-                .accessibilityHidden(true)
+        VStack {
+            Text(title)
+                .font(.headline)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
-
-                Text(description)
-                    .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.7))
-            }
+            Text(description)
+                .font(.subheadline)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var startButton: some View {
-        VStack(spacing: 12) {
+        VStack {
             Button {
                 onComplete()
             } label: {
-                HStack(spacing: 10) {
-                    Text("Jetzt starten")
-
-                    Image(systemName: "arrow.right")
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
+                Text("Jetzt starten")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.cyan)
-            .foregroundStyle(.black)
-            .controlSize(.large)
-
-            Text("Lerne in deinem eigenen Tempo.")
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.6))
+            .padding()
+            .background(.black)
+            .overlay {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(
+                        LinearGradient(
+                            colors: [.black, .white, .black],
+                            startPoint: .trailing,
+                            endPoint: .leading
+                        ),
+                        lineWidth: 3
+                    )
+            }
         }
     }
 }

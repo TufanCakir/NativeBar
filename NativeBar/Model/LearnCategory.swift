@@ -5,6 +5,8 @@
 //  Created by Tufan Cakir on 14.11.26.
 //
 
+import SwiftUI
+
 enum LearnCategory: String, CaseIterable, Identifiable {
 
     case home
@@ -40,6 +42,32 @@ enum LearnCategory: String, CaseIterable, Identifiable {
             return "swift_topic.json"
         case .swiftUI:
             return "swiftui_topic.json"
+        }
+    }
+}
+
+extension LearnCategory {
+    var accentColor: Color {
+        switch self {
+        case .home:
+            return .white
+        case .swift:
+            return .orange
+        case .swiftUI:
+            return .blue
+        }
+    }
+}
+
+extension LearnCategory {
+    var backgroundColors: [Color] {
+        switch self {
+        case .home:
+            return [.black, .gray, .black]
+        case .swift:
+            return [.black, .orange, .black]
+        case .swiftUI:
+            return [.black, .blue, .black]
         }
     }
 }

@@ -74,10 +74,27 @@ struct SearchView: View {
             || english.localizedStandardContains(normalizedSearchText)
     }
 
+    private var primaryResultColor: Color? {
+        if let firstTopic = filteredTopics.first {
+            return firstTopic.color
+        }
+        if let firstDoc = filteredDocumentations.first {
+            return firstDoc.color
+        }
+        return nil
+    }
+
+    private var dynamicBackgroundColors: [Color] {
+        guard let color = primaryResultColor else {
+            return [.black, .gray]
+        }
+        return [.black, color]
+    }
+
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [.black, .gray],
+                colors: dynamicBackgroundColors,
                 startPoint: .trailing,
                 endPoint: .bottom
             )
@@ -93,12 +110,14 @@ struct SearchView: View {
                 }
                 .padding()
             }
+            .tint(primaryResultColor ?? .white)
             .scrollDismissesKeyboard(.immediately)
         }
     }
 
     @ViewBuilder
     private var searchResults: some View {
+
         if filteredTopics.isEmpty
             && filteredDocumentations.isEmpty
         {
@@ -113,7 +132,12 @@ struct SearchView: View {
                     count: filteredTopics.count
                 )
                 .padding()
-                .background(.ultraThinMaterial)
+                .background(.black)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.orange, lineWidth: 3)
+                }
+                .foregroundStyle(.orange)
 
                 ForEach(filteredTopics) { topic in
                     resultCard(
@@ -133,7 +157,12 @@ struct SearchView: View {
                     count: filteredDocumentations.count
                 )
                 .padding()
-                .background(.ultraThinMaterial)
+                .background(.blue)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.orange, lineWidth: 3)
+                }
+                .foregroundStyle(.blue)
 
                 ForEach(filteredDocumentations) { documentation in
                     resultCard(
@@ -197,7 +226,7 @@ struct SearchView: View {
                         .symbolEffect(.replace)
                     )
                     .foregroundStyle(
-                        copiedID == id ? .green : .white
+                        copiedID == id ? .green : color
                     )
                 }
                 .accessibilityLabel("Ergebnis kopieren")
@@ -207,6 +236,10 @@ struct SearchView: View {
 
         }
         .padding()
-        .background(.ultraThinMaterial)
+        .background(.black)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(color, lineWidth: 3)
+        }
     }
 }

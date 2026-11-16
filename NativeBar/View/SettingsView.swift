@@ -19,7 +19,7 @@ struct SettingsView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [.black, .gray],
+                    colors: [.black, .gray, .black],
                     startPoint: .trailing,
                     endPoint: .bottom
                 )
@@ -51,6 +51,19 @@ struct SettingsView: View {
             }
             .pickerStyle(.menu)
         }
+        .padding()
+        .background(.black)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    LinearGradient(
+                        colors: [.black, .white, .black],
+                        startPoint: .trailing,
+                        endPoint: .leading
+                    ),
+                    lineWidth: 3
+                )
+        }
     }
 
     private var informationSection: some View {
@@ -60,6 +73,19 @@ struct SettingsView: View {
             Text(appVersion)
             Text("Build")
             Text(buildNumber)
+        }
+        .padding()
+        .background(.black)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    LinearGradient(
+                        colors: [.black, .white, .black],
+                        startPoint: .trailing,
+                        endPoint: .leading
+                    ),
+                    lineWidth: 3
+                )
         }
     }
 

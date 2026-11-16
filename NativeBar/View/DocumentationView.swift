@@ -56,7 +56,7 @@ struct DocumentationView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [.black, .gray],
+                    colors: selectedCategory.backgroundColors,
                     startPoint: .trailing,
                     endPoint: .bottom
                 )
@@ -81,11 +81,19 @@ struct DocumentationView: View {
                     Button("Schließen") {
                         selectedCategory = .home
                     }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
+                    }
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Kopieren") {
                         UIPasteboard.general.string = currentDocumentationText
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
                     }
                 }
 
@@ -100,8 +108,13 @@ struct DocumentationView: View {
                             }
                         }
                     }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedCategory.accentColor, lineWidth: 3)
+                    }
                 }
             }
+            .tint(selectedCategory.accentColor)
         }
     }
 
@@ -114,9 +127,18 @@ struct DocumentationView: View {
                             Label(
                                 documentation.text,
                                 systemImage: documentation.SFSymbol
+
                             )
                             .foregroundStyle(documentation.color)
                             .font(.headline)
+                            .padding()
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(
+                                        selectedCategory.accentColor,
+                                        lineWidth: 3
+                                    )
+                            }
 
                             Spacer()
 
@@ -130,12 +152,16 @@ struct DocumentationView: View {
                                 )
                             }
                         }
+                        .foregroundStyle(documentation.color)
 
                         Text(documentation.description.localized)
-                            .font(.subheadline)
                     }
                     .padding()
-                    .background(.ultraThinMaterial)
+                    .background(.black)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(documentation.color, lineWidth: 3)
+                    }
                 }
             }
         }
