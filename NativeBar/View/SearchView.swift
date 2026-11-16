@@ -15,12 +15,22 @@ struct SearchView: View {
     @State private var copiedID: String?
 
     private let allTopics: [Topic] =
-        loadLocalJSON("swift_topic.json")
+        LearnCategory.allCases.flatMap { category in
+            guard let file = category.topicFile else {
+                return [Topic]()
+            }
+
+            return loadLocalJSON(file) as [Topic]
+        }
 
     private let allDocumentations: [Documentation] =
-        loadLocalJSON("swift_documentation.json")
+        LearnCategory.allCases.flatMap { category in
+            guard let file = category.documentationFile else {
+                return [Documentation]()
+            }
 
-    // MARK: - Suche
+            return loadLocalJSON(file) as [Documentation]
+        }
 
     private var normalizedSearchText: String {
         searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -64,8 +74,6 @@ struct SearchView: View {
             || english.localizedStandardContains(normalizedSearchText)
     }
 
-    // MARK: - Layout
-
     var body: some View {
         ZStack {
             LinearGradient(
@@ -76,7 +84,7 @@ struct SearchView: View {
             .ignoresSafeArea()
 
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 16) {
+                LazyVStack(alignment: .leading, spacing: 12) {
                     if normalizedSearchText.isEmpty {
                         emptySearchView
                     } else {
@@ -85,12 +93,9 @@ struct SearchView: View {
                 }
                 .padding()
             }
-            .scrollDismissesKeyboard(.interactively)
+            .scrollDismissesKeyboard(.immediately)
         }
-        .foregroundStyle(.white)
     }
-
-    // MARK: - Suchergebnisse
 
     @ViewBuilder
     private var searchResults: some View {
@@ -139,8 +144,6 @@ struct SearchView: View {
         }
     }
 
-    // MARK: - Startansicht
-
     private var emptySearchView: some View {
         ContentUnavailableView {
             Label(
@@ -152,33 +155,22 @@ struct SearchView: View {
                 "Lerninhalte und Dokumentation durchsuchen"
             )
         }
-        .frame(maxWidth: .infinity)
     }
-
-    // MARK: - Überschriften
 
     private func resultHeader(
         _ title: String,
         symbol: String,
         count: Int
     ) -> some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             Label(title, systemImage: symbol)
-                .font(.title3.bold())
 
             Spacer()
 
             Text(count, format: .number)
-                .font(.caption.bold())
-                .foregroundStyle(.white.opacity(0.7))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(.white.opacity(0.1), in: Capsule())
-        }
-        .padding(.top, 8)
-    }
 
-    // MARK: - Ergebniskarten
+        }
+    }
 
     private func resultCard(
         id: String,
@@ -190,10 +182,9 @@ struct SearchView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 12) {
                 Label(title, systemImage: symbol)
-                    .font(.headline)
                     .foregroundStyle(color)
 
-                Spacer(minLength: 8)
+                Spacer()
 
                 Button {
                     UIPasteboard.general.string =
@@ -213,31 +204,13 @@ struct SearchView: View {
                         copiedID == id ? .green : .white
                     )
                 }
-                .buttonStyle(.plain)
                 .accessibilityLabel("Ergebnis kopieren")
             }
 
             Text(description)
-                .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.8))
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading
-                )
-                .textSelection(.enabled)
+
         }
-        .padding(16)
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
-        .background {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.white.opacity(0.08))
-        }
-        .overlay {
-            RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(.white.opacity(0.1))
-        }
+        .padding()
+        .background(.ultraThinMaterial)
     }
 }
