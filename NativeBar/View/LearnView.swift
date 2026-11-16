@@ -66,7 +66,7 @@ struct LearnView: View {
                     VStack {
                         Text("Was möchtest du heute lernen?")
                     }
-                    .font(.system(size: 25))
+                    .font(.system(size: 20))
 
                 case .swift:
                     topicList(items: topicSwift)
@@ -135,6 +135,7 @@ struct LearnView: View {
                             .font(.subheadline)
                     }
                     .padding()
+                    .background(.ultraThinMaterial)
                 }
             }
         }

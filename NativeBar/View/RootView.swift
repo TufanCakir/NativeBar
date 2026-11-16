@@ -35,7 +35,7 @@ struct RootView: View {
                     SearchView(searchText: $searchText)
                         .searchable(
                             text: $searchText,
-                            prompt: "Suche"
+                            prompt: "Durchsuchen"
                         )
                 }
             }

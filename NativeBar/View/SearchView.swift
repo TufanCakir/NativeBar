@@ -112,6 +112,8 @@ struct SearchView: View {
                     symbol: "books.vertical",
                     count: filteredTopics.count
                 )
+                .padding()
+                .background(.ultraThinMaterial)
 
                 ForEach(filteredTopics) { topic in
                     resultCard(
@@ -130,6 +132,8 @@ struct SearchView: View {
                     symbol: "document",
                     count: filteredDocumentations.count
                 )
+                .padding()
+                .background(.ultraThinMaterial)
 
                 ForEach(filteredDocumentations) { documentation in
                     resultCard(
@@ -146,14 +150,7 @@ struct SearchView: View {
 
     private var emptySearchView: some View {
         ContentUnavailableView {
-            Label(
-                "Suche",
-                systemImage: "magnifyingglass"
-            )
-        } description: {
-            Text(
-                "Lerninhalte und Dokumentation durchsuchen"
-            )
+            Text("Lerninhalte und Dokumentation durchsuchen")
         }
     }
 
@@ -168,7 +165,6 @@ struct SearchView: View {
             Spacer()
 
             Text(count, format: .number)
-
         }
     }
 
